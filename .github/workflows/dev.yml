@@ -13,10 +13,6 @@ jobs:
         id: short-sha
         with:
           length: 8
-      - name: aber
-        run: echo ${{ secrets.TOKEN}}
-      - name: aber2
-        run: echo ${{ secrets.TOKEN}}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
