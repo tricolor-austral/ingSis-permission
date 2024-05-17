@@ -22,7 +22,7 @@ jobs:
         with:
           registry: ghcr.io
           username: austral-tricolor
-          password: ${{ secrets.DOCKER_PACKAGES_TOKEN }}
+          password: ${{ secrets.DOCKER_PACKAGES_SECRET }}
 
       - name: Build and push
         uses: docker/build-push-action@v4
@@ -31,5 +31,5 @@ jobs:
             ghcr.io/tricolor-austral/ingsis-permission:latest
           build-args: |
             "USERNAME=${{ secrets.PUBLISH_USERNAME }}"
-            "TOKEN=${{ secrets.DOCKER_PACKAGES_TOKEN }}"
+            "TOKEN=${{ secrets.DOCKER_PACKAGES_SECRET }}"
           push: true
