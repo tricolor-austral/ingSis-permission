@@ -31,14 +31,3 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/tricolor-austral/ingsis-permission:latest
-          build-args: |
-            USERNAME=${{ secrets.PUBLISH_USERNAME }}
-            TOKEN=${{ secrets.DOCKER_PACKAGES_SECRET }}
-
-      - name: Debug information
-        run: |
-          echo "GITHUB_ACTOR: ${{ github.actor }}"
-          echo "GITHUB_REPOSITORY: ${{ github.repository }}"
-          echo "GITHUB_REF: ${{ github.ref }}"
-          echo "GITHUB_SHA: ${{ github.sha }}"
-          echo "GITHUB_RUN_ID: ${{ github.run_id }}"
