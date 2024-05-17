@@ -30,12 +30,12 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/ingsis-permissions:latest
+          tags: ghcr.io/your-github-username/ingSis-permission:latest
           build-args: |
             USERNAME=${{ secrets.PUBLISH_USERNAME }}
             TOKEN=${{ secrets.DOCKER_PACKAGES_SECRET }}
 
-      - name: Print debug information
+      - name: Debug information
         run: |
           echo "GITHUB_ACTOR: ${{ github.actor }}"
           echo "GITHUB_REPOSITORY: ${{ github.repository }}"
