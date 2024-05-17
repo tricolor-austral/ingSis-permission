@@ -32,4 +32,5 @@ jobs:
           build-args: |
             "USERNAME=${{ secrets.PUBLISH_USERNAME }}"
             "TOKEN=${{ secrets.DOCKER_PACKAGES_SECRET }}"
+
           push: true
