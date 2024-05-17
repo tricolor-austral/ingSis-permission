@@ -29,7 +29,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           tags: |
-            ghcr.io/ingSis-permissions:latest
+            ghcr.io/ingsis-permissions:latest
           build-args: |
             "USERNAME=${{ secrets.PUBLISH_USERNAME }}"
             "TOKEN=${{ secrets.INGSIS_SECRET }}"
