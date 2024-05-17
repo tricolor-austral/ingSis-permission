@@ -21,7 +21,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
-          username: ingsis-group-6
+          username: austral-tricolor
           password: ${{ secrets.DOCKER_PACKAGES_TOKEN }}
 
       - name: Build and push
