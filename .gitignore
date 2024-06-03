@@ -40,3 +40,4 @@ out/
 .kotlin
 add
 ### Env File ###
+.env
