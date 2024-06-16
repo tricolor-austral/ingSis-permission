@@ -1,4 +1,4 @@
-package ingsis.tricolor.Permission
+package ingsis.tricolor.permission
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

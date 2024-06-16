@@ -1,4 +1,4 @@
-package ingsis.tricolor.Permission
+package ingsis.tricolor.permission
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication

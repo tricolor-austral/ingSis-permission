@@ -1,8 +1,7 @@
 @file:Suppress("ktlint:standard:no-wildcard-imports")
 
-package ingsis.tricolor.Permission.security
+package ingsis.tricolor.permission.security
 
-import AudienceValidator
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
