@@ -12,7 +12,7 @@ import java.util.UUID
 @NoArgsConstructor
 @Setter
 class Resources(
-    val resourceId: String,
+    val outsideResourceId: String,
     @ManyToMany
     @JoinTable(
         name = "resource_user",
@@ -27,13 +27,13 @@ class Resources(
     val id: String = UUID.randomUUID().toString()
 
     constructor(resource: AddResource) : this(
-        resourceId = resource.resourceId,
+        outsideResourceId = resource.resourceId,
         users = mutableListOf(User(resource.userId)),
         permissions = resource.permissions.toMutableSet(),
     ) {}
 
     constructor() : this(
-        resourceId = "",
+        outsideResourceId = "",
         users = mutableListOf(),
         permissions = mutableSetOf(),
     ) {}
