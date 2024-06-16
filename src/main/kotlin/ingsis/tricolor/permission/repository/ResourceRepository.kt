@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ResourceRepository : JpaRepository<Resources, String>
+interface ResourceRepository : JpaRepository<Resources, String> {
+    fun findAllByUsersId(userId: String): List<Resources>
+}

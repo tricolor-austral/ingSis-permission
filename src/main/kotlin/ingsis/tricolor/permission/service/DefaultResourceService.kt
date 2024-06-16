@@ -1,6 +1,7 @@
 package ingsis.tricolor.permission.service
 
 import ingsis.tricolor.permission.dto.resource.AddResource
+import ingsis.tricolor.permission.dto.resource.ResourceUserPermission
 import ingsis.tricolor.permission.entity.Resources
 import ingsis.tricolor.permission.repository.ResourceRepository
 import ingsis.tricolor.permission.service.interfaces.ResourceService
@@ -18,5 +19,13 @@ class DefaultResourceService(
     override fun addResource(addResource: AddResource): Resources {
         userService.findOrCreate(addResource.userId)
         return repository.save(Resources(addResource))
+    }
+
+    override fun findUserSnippets(id: String): List<ResourceUserPermission> {
+        val returnableResources = mutableListOf<ResourceUserPermission>()
+        repository.findAllByUsersId(id).map {
+            returnableResources.add(ResourceUserPermission(it.resourceId, it.permissions))
+        }
+        return returnableResources
     }
 }

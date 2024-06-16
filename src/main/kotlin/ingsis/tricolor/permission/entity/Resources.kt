@@ -12,7 +12,7 @@ import java.util.UUID
 @NoArgsConstructor
 @Setter
 class Resources(
-    private val resourceId: String,
+    val resourceId: String,
     @ManyToMany
     @JoinTable(
         name = "resource_user",
