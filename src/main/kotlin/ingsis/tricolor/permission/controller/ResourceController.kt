@@ -74,9 +74,12 @@ class ResourceController(
         return ResponseEntity(response, HttpStatus.OK)
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("{resourceId}")
     fun deleteResource(
-        @RequestBody resourceUser: ResourceUser,
-    ) {
+        @CookieValue("userId") userId: String,
+        @PathVariable("resourceId") resourceId: String,
+    ): ResponseEntity<String> {
+        service.deleteResource(userId, resourceId)
+        return ResponseEntity("Deleted Successfully", HttpStatus.OK)
     }
 }
