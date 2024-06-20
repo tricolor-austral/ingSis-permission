@@ -53,7 +53,7 @@ class ResourceController(
     @PostMapping("/share-resource")
     fun shareResource(
         @RequestBody params: ShareResource,
-    ): ResponseEntity<ResourceUserPermission> {
+    ): ResponseEntity<AddResource> {
         val resource = service.shareResource(params.selfId, params.otherId, params.resourceId, params.permissions)
         return ResponseEntity(resource, HttpStatus.CREATED)
     }

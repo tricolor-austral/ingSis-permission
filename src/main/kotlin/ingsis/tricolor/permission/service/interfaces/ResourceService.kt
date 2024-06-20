@@ -19,7 +19,7 @@ interface ResourceService {
         otherId: String,
         resourceId: String,
         permissions: MutableList<Permission>,
-    ): ResourceUserPermission
+    ): AddResource
 
     fun checkCanWrite(
         resourceId: String,

@@ -51,13 +51,14 @@ class DefaultResourceService(
         otherId: String,
         resourceId: String,
         permissions: MutableList<Permission>,
-    ): ResourceUserPermission {
+    ): AddResource {
         val resource = findByUsersIdAndResourceId(selfId, resourceId)
         if (!resource.permissions.contains(Permission.OWNER)) {
             throw UnauthorizedShareException("The User is not the owner of the resource and cannot share it")
         }
         val addResource = AddResource(otherId, resourceId, permissions)
-        return createResource(addResource)
+        createResource(addResource)
+        return addResource
     }
 
     override fun checkCanWrite(
