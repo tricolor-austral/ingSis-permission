@@ -5,6 +5,7 @@ import ingsis.tricolor.permission.dto.resource.ResourceUserPermission
 import ingsis.tricolor.permission.entity.Permission
 import ingsis.tricolor.permission.entity.Resources
 import ingsis.tricolor.permission.error.ResourceNotFoundException
+import ingsis.tricolor.permission.error.UnauthorizedDeleteException
 import ingsis.tricolor.permission.error.UnauthorizedShareException
 import ingsis.tricolor.permission.repository.ResourceRepository
 import ingsis.tricolor.permission.service.interfaces.ResourceService
@@ -69,6 +70,17 @@ class DefaultResourceService(
 
     override fun getAllWriteableResources(userId: String): List<ResourceUserPermission> {
         return findUserResources(userId).filter { it.permissions.contains(Permission.WRITE) }
+    }
+
+    override fun deleteResource(
+        userId: String,
+        resourceId: String,
+    ) {
+        if (checkCanWrite(resourceId, userId)) {
+            repository.deleteById(resourceId)
+        } else {
+            throw UnauthorizedDeleteException()
+        }
     }
 
     private fun createResource(addResource: AddResource): ResourceUserPermission {

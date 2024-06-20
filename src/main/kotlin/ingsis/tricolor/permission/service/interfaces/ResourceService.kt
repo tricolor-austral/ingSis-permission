@@ -27,4 +27,9 @@ interface ResourceService {
     ): Boolean
 
     fun getAllWriteableResources(userId: String): List<ResourceUserPermission>
+
+    fun deleteResource(
+        userId: String,
+        resourceId: String,
+    )
 }

@@ -10,12 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.context.request.WebRequest
 
 @Controller()
@@ -29,6 +24,7 @@ class ResourceController(
         ex: PermissionExceptions,
         request: WebRequest,
     ): ResponseEntity<String> {
+        println(ex.message + " | " + ex.status)
         return ResponseEntity(ex.message, ex.status)
     }
 
@@ -48,9 +44,10 @@ class ResourceController(
 
     @GetMapping("/user-resource")
     fun getSpecificPermission(
-        @RequestBody ids: ResourceUser,
+        @CookieValue("userId") userId: String,
+        @CookieValue("resourceId") resourceId: String,
     ): ResponseEntity<ResourceUserPermission> {
-        return ResponseEntity(service.findByUsersIdAndResourceId(ids.userId, ids.resourceId), HttpStatus.OK)
+        return ResponseEntity(service.findByUsersIdAndResourceId(userId, resourceId), HttpStatus.OK)
     }
 
     @PostMapping("/share-resource")
@@ -75,5 +72,11 @@ class ResourceController(
     ): ResponseEntity<List<ResourceUserPermission>> {
         val response = service.getAllWriteableResources(id)
         return ResponseEntity(response, HttpStatus.OK)
+    }
+
+    @DeleteMapping("")
+    fun deleteResource(
+        @RequestBody resourceUser: ResourceUser,
+    ) {
     }
 }
