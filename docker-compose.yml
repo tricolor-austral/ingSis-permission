@@ -14,7 +14,7 @@ services:
       - db
 
   db:
-    container_name: permission_db
+    container_name: "permission_db"
     image: postgres:alpine
     ports:
       - "5431:5432"
