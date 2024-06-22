@@ -12,6 +12,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       DB_HOST: ${POSTGRES_DB}
       DB_PORT: 5432
+
   db:
     container_name: ${POSTGRES_DB}
     image: postgres:12
