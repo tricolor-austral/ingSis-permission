@@ -40,3 +40,5 @@ out/
 .kotlin
 add
 ### Env File ###
+.env
+/newrelic-java/newrelic/newrelic.yml
