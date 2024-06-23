@@ -9,11 +9,10 @@ import ingsis.tricolor.permission.service.interfaces.ResourceService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.context.request.WebRequest
 
-@Controller()
+@RestController()
 @RequestMapping("/resource")
 class ResourceController(
     @Autowired
@@ -79,6 +78,7 @@ class ResourceController(
         @CookieValue("userId") userId: String,
         @PathVariable("resourceId") resourceId: String,
     ): ResponseEntity<String> {
+        println("userId: $userId, resourceId: $resourceId")
         service.deleteResource(userId, resourceId)
         return ResponseEntity("Deleted Successfully", HttpStatus.OK)
     }

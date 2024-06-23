@@ -52,6 +52,7 @@ class DefaultResourceService(
         resourceId: String,
         permissions: MutableList<Permission>,
     ): AddResource {
+        if (selfId == otherId) throw UnauthorizedShareException("Not allowed to share it with yourself")
         val resource = findByUsersIdAndResourceId(selfId, resourceId)
         if (!resource.permissions.contains(Permission.OWNER)) {
             throw UnauthorizedShareException("The User is not the owner of the resource and cannot share it")
@@ -78,13 +79,21 @@ class DefaultResourceService(
         resourceId: String,
     ) {
         if (checkCanWrite(resourceId, userId)) {
-            repository.deleteById(resourceId)
+            println("Authorized to delete\n deleting ...")
+            println("resourceId: $resourceId")
+            val resource =
+                repository.findByOutsideResourceId(
+                    resourceId,
+                ).orElse(null) ?: throw ResourceNotFoundException("resource not found")
+            repository.delete(resource)
         } else {
+            println("Not authorized to delete")
             throw UnauthorizedDeleteException()
         }
     }
 
     private fun createResource(addResource: AddResource): ResourceUserPermission {
+        println("ResourceId: ${addResource.resourceId}, userId: ${addResource.userId}")
         userService.findOrCreate(addResource.userId)
         val resource = repository.save(Resources(addResource))
         return ResourceUserPermission(resource.outsideResourceId, resource.permissions)

@@ -13,4 +13,6 @@ interface ResourceRepository : JpaRepository<Resources, String> {
         outsideResourceId: String,
         userId: String,
     ): Optional<Resources>
+
+    fun findByOutsideResourceId(outsideResourceId: String): Optional<Resources>
 }

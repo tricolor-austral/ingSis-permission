@@ -22,6 +22,10 @@ class DefaultUserService(
         return user
     }
 
+    override fun getAll(): List<String> {
+        return repository.findAll().map { it.id }
+    }
+
     private fun createUser(id: String): User {
         println("Creating user ...")
         return repository.saveAndFlush(User(id))
