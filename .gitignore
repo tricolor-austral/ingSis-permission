@@ -39,6 +39,8 @@ out/
 ### Kotlin ###
 .kotlin
 add
-### Env File ###
+
+# Ignore environment variables file
+.env
 .env
 /newrelic-java/newrelic/newrelic.yml
