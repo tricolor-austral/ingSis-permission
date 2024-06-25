@@ -44,3 +44,4 @@ add
 .env
 .env
 /newrelic-java/newrelic/newrelic.yml
+!/newrelic-java/newrelic/newrelic.yml
