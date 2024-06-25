@@ -39,9 +39,9 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
-          username: "ingsis-dev"
+          username: "tricolor-ingsis"
           key: ${{ secrets.INGSIS_DEV_KEY }}
           script: |
             cd permission-api
-            docker-compose -f docker-compose.dev.yml stop permission-api
-            docker-compose -f docker-compose.dev.yml up -d --build permission-api
+            docker stop permission-api
+            docker compose -f docker-compose.dev.yml up -d permission-api
