@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
 }
 
 group = "ingsis.tricolor"
@@ -27,6 +28,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.3.1")
     compileOnly("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
 }
 
 tasks.withType<KotlinCompile> {
