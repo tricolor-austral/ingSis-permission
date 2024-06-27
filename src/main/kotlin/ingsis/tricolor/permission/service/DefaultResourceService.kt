@@ -5,6 +5,7 @@ import ingsis.tricolor.permission.dto.resource.AddResource
 import ingsis.tricolor.permission.dto.resource.ResourceUserPermission
 import ingsis.tricolor.permission.entity.Permission
 import ingsis.tricolor.permission.entity.Resources
+import ingsis.tricolor.permission.error.PermissionExceptions
 import ingsis.tricolor.permission.error.ResourceNotFoundException
 import ingsis.tricolor.permission.error.UnauthorizedDeleteException
 import ingsis.tricolor.permission.error.UnauthorizedShareException
@@ -12,6 +13,7 @@ import ingsis.tricolor.permission.repository.ResourceRepository
 import ingsis.tricolor.permission.service.interfaces.ResourceService
 import ingsis.tricolor.permission.service.interfaces.UserService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 
 @Service
@@ -59,6 +61,8 @@ class DefaultResourceService(
         if (!resource.permissions.contains(Permission.OWNER)) {
             throw UnauthorizedShareException("The User is not the owner of the resource and cannot share it")
         }
+        val otherResources = findUserResources(otherId).filter { it.resourceId == resourceId }
+        if (otherResources.isNotEmpty()) throw UnauthorizedShareException("User already has access to resource")
         val addResource = AddResource(otherId, resourceId, permissions)
         createResource(addResource)
         return addResource
@@ -68,8 +72,12 @@ class DefaultResourceService(
         resourceId: String,
         userId: String,
     ): ResourceUsers {
-        val resource = findByUsersIdAndResourceId(userId, resourceId)
-        return ResourceUsers(userId, resource.permissions.toList())
+        val resources =
+            getAllWriteableResources(userId).filter {
+                it.resourceId == resourceId
+            }
+        if (resources.isEmpty()) throw PermissionExceptions("User doesn't have that resource available", HttpStatus.UNAUTHORIZED)
+        return ResourceUsers(userId, resources[0].permissions.toList())
     }
 
     override fun getAllWriteableResources(userId: String): List<ResourceUserPermission> =
