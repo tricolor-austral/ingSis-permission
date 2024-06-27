@@ -1,5 +1,6 @@
 package ingsis.tricolor.permission.service.interfaces
 
+import ResourceUsers
 import ingsis.tricolor.permission.dto.resource.AddResource
 import ingsis.tricolor.permission.dto.resource.ResourceUserPermission
 import ingsis.tricolor.permission.entity.Permission
@@ -24,7 +25,7 @@ interface ResourceService {
     fun checkCanWrite(
         resourceId: String,
         userId: String,
-    ): Boolean
+    ): ResourceUsers
 
     fun getAllWriteableResources(userId: String): List<ResourceUserPermission>
 

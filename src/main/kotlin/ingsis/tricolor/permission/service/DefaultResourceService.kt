@@ -1,5 +1,6 @@
 package ingsis.tricolor.permission.service
 
+import ResourceUsers
 import ingsis.tricolor.permission.dto.resource.AddResource
 import ingsis.tricolor.permission.dto.resource.ResourceUserPermission
 import ingsis.tricolor.permission.entity.Permission
@@ -38,7 +39,8 @@ class DefaultResourceService(
         resourceId: String,
     ): ResourceUserPermission {
         val resource =
-            repository.findByOutsideResourceIdAndUsersId(resourceId, userId)
+            repository
+                .findByOutsideResourceIdAndUsersId(resourceId, userId)
                 .orElse(null)
         if (resource == null) {
             throw ResourceNotFoundException("The ids provided don't match an existing resource")
@@ -65,26 +67,29 @@ class DefaultResourceService(
     override fun checkCanWrite(
         resourceId: String,
         userId: String,
-    ): Boolean {
+    ): ResourceUsers {
         val resource = findByUsersIdAndResourceId(userId, resourceId)
-        return resource.permissions.contains(Permission.WRITE)
+        return ResourceUsers(userId, resource.permissions.toList())
     }
 
-    override fun getAllWriteableResources(userId: String): List<ResourceUserPermission> {
-        return findUserResources(userId).filter { it.permissions.contains(Permission.WRITE) }
-    }
+    override fun getAllWriteableResources(userId: String): List<ResourceUserPermission> =
+        findUserResources(userId).filter {
+            it.permissions.contains(Permission.WRITE)
+        }
 
     override fun deleteResource(
         userId: String,
         resourceId: String,
     ) {
-        if (checkCanWrite(resourceId, userId)) {
+        val canwrite = checkCanWrite(resourceId, userId).permissions.contains(Permission.WRITE)
+        if (canwrite) {
             println("Authorized to delete\n deleting ...")
             println("resourceId: $resourceId")
             val resource =
-                repository.findByOutsideResourceId(
-                    resourceId,
-                ).orElse(null) ?: throw ResourceNotFoundException("resource not found")
+                repository
+                    .findByOutsideResourceId(
+                        resourceId,
+                    ).orElse(null) ?: throw ResourceNotFoundException("resource not found")
             repository.delete(resource)
         } else {
             println("Not authorized to delete")
