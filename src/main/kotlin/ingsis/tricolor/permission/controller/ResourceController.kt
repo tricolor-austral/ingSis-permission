@@ -1,7 +1,7 @@
 package ingsis.tricolor.permission.controller
 
+import ResourceUsers
 import ingsis.tricolor.permission.dto.resource.AddResource
-import ingsis.tricolor.permission.dto.resource.ResourceUser
 import ingsis.tricolor.permission.dto.resource.ResourceUserPermission
 import ingsis.tricolor.permission.dto.resource.ShareResource
 import ingsis.tricolor.permission.error.PermissionExceptions
@@ -39,24 +39,18 @@ class ResourceController(
     @PostMapping("/create-resource")
     fun addResource(
         @RequestBody addResource: AddResource,
-    ): ResponseEntity<ResourceUserPermission> {
-        return ResponseEntity(service.addResource(addResource), HttpStatus.CREATED)
-    }
+    ): ResponseEntity<ResourceUserPermission> = ResponseEntity(service.addResource(addResource), HttpStatus.CREATED)
 
     @GetMapping("/all-by-userId")
     fun getPermissionsForUser(
         @RequestParam id: String,
-    ): ResponseEntity<List<ResourceUserPermission>> {
-        return ResponseEntity(service.findUserResources(id), HttpStatus.OK)
-    }
+    ): ResponseEntity<List<ResourceUserPermission>> = ResponseEntity(service.findUserResources(id), HttpStatus.OK)
 
     @GetMapping("/user-resource")
     fun getSpecificPermission(
         @CookieValue("userId") userId: String,
         @CookieValue("resourceId") resourceId: String,
-    ): ResponseEntity<ResourceUserPermission> {
-        return ResponseEntity(service.findByUsersIdAndResourceId(userId, resourceId), HttpStatus.OK)
-    }
+    ): ResponseEntity<ResourceUserPermission> = ResponseEntity(service.findByUsersIdAndResourceId(userId, resourceId), HttpStatus.OK)
 
     @PostMapping("/share-resource")
     fun shareResource(
@@ -70,7 +64,7 @@ class ResourceController(
     fun checkCanWrite(
         @CookieValue("userId") userId: String,
         @CookieValue("resourceId") resourceId: String,
-    ): ResponseEntity<Boolean> {
+    ): ResponseEntity<ResourceUsers> {
         val response = service.checkCanWrite(resourceId, userId)
         return ResponseEntity(response, HttpStatus.OK)
     }
