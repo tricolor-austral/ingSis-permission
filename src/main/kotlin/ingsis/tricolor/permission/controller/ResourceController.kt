@@ -68,9 +68,10 @@ class ResourceController(
 
     @GetMapping("/can-write")
     fun checkCanWrite(
-        @RequestBody params: ResourceUser,
+        @CookieValue("userId") userId: String,
+        @CookieValue("resourceId") resourceId: String,
     ): ResponseEntity<Boolean> {
-        val response = service.checkCanWrite(params.resourceId, params.userId)
+        val response = service.checkCanWrite(resourceId, userId)
         return ResponseEntity(response, HttpStatus.OK)
     }
 
